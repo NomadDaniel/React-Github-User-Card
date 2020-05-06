@@ -1,8 +1,9 @@
-import React from 'react';
-import UserCard from './components/UserCard';
-import axios from 'axios';
+import React from 'react'
+import UserCard from './components/UserCard'
+import Followers from './components/Followers'
+import axios from 'axios'
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 // ______ styled components _______//
 const BigDiv = styled.div`
@@ -20,7 +21,7 @@ flex-direction: column;
 justify-content: center;
 // flex-flow:  wrap;
 align-items: center;
-`;
+`
 
 const H1 = styled.h1`
 background-color: CornflowerBlue;
@@ -31,18 +32,18 @@ max-width: 50%;
 height: auto;
 border: 1px solid black;
 border-radius: 15px;
-`;
+`
 
 
 // ______ class / constructor / state _______//
 
 class App extends React.Component {
   constructor () {
-    super();
+    super()
     this.state = {
       user: '',
       followers: []
-    };
+    }
   }
   // _____ componentDidMount ( 2 axios, setState w responses ) _____ //
 
@@ -50,18 +51,18 @@ class App extends React.Component {
     axios
       .get( 'https://api.github.com/users/NomadDaniel' )
       .then( res1 => {
-        console.log( res1.data );
+        console.log( res1.data )
         axios
           .get( res1.data.followers_url )
           .then( res2 => {
-            console.log( res2.data );
+            console.log( res2.data )
 
             this.setState( {
               user: res1.data,
               followers: res2.data
-            } );
-          } );
-      } );
+            } )
+          } )
+      } )
   }
 
   // ______ render/return UserCards (div, h1, card, h2, card) _______//
@@ -81,21 +82,10 @@ class App extends React.Component {
         />
 
         <H1>My Followers</H1>
-        {
-          this.state.followers.map( user => {
-            return <UserCard
-              avatarURL={ user.avatar_url }
-              name={ user.name }
-              login={ user.login }
-              url={ user.url }
-              followers={ user.followers }
-              following={ user.following }
-              bio={ user.bio }
-            />;
-          } )
-        }
+        <Followers />
+
       </BigDiv>
-    );
+    )
   }
 }
-export default App;
+export default App
